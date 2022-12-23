@@ -6,7 +6,7 @@
         </h2>
 		
     </x-slot>
-	
+	<br><br>
 	
 	<div class="container">
 	  <!-- Button to Open the Modal -->
@@ -116,12 +116,12 @@
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
 			{data: 'mobile', name: 'mobile'},
-			{data: 'pic', name: 'pic'},
-			/*{data: 'pic', name: 'pic',
+			//{data: 'pic', name: 'pic'},
+			{data: 'pic', name: 'pic',
 				render: function( data, type, full, meta ) {
-                        return "<img src=\"{{asset('public/image')}}/" + data + "\" height=\"50\"/>";
+                        return "<img src=\"" + data + "\" height=\"50\"/>";
                     }
-			},*/
+			},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
