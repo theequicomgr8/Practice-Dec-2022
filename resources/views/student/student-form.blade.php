@@ -80,7 +80,40 @@
 		</div>
 	  </div>
 	  
+	  
+	  <!--  datatable -->
+	  <table class="table table-bordered data-table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Mobile</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	  </table> 
+	  
 	</div>
-
-
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  $(function () {
+      
+    var table = $('.data-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('student.index') }}",
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'name', name: 'name'},
+            {data: 'email', name: 'email'},
+			{data: 'mobile', name: 'mobile'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+    });
+      
+  });
+</script>
 </x-app-layout>

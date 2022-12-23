@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use DataTables;
+use App\Models\Student;
 class StudentController extends Controller
 {
     public function create(){
@@ -45,5 +47,26 @@ class StudentController extends Controller
 			return back()->with('msg','Some Error');
 		}
 		
+	}
+	
+	
+	
+	public function studentDisplay(Request $request){
+		if ($request->ajax()) {
+			$i=1;
+            $data = DB::table('students')->get();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+       
+                            $btn = '<a href="javascript:void(0)" data-eid="'.$row->id.'" class="edit btn btn-primary btn-sm">Edit</a>
+							<a href="javascript:void(0)" data-did="'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+          
+        return view('users');
 	}
 }
