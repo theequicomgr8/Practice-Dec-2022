@@ -81,7 +81,7 @@
 	  </div>
 	  
 	  
-	  <!--  datatable -->
+	  <!--  datatable  -->
 	  <table class="table table-bordered data-table">
 		<thead>
 			<tr>
@@ -96,8 +96,7 @@
 	  </table> 
 	  
 	</div>
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
 <script type="text/javascript">
   $(function () {
       
