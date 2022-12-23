@@ -20,12 +20,19 @@ class StudentController extends Controller
 			"mobile"   => 'required',
 		]);
 		
+		if ($request->hasFile('pic'))
+		{
+			$file = $request->file('pic');
+			$pic = time() . '-' . $file->getClientOriginalName();
+			$file->move('image/', $pic);
+		}
 		
 		$basic_detail=[
 			"name"      => $request->name,
 			"email"     => $request->email,
 			"password"  => $request->password,
 			"mobile"    => $request->mobile,
+			"pic"       => $pic,
 		];
 		
 		
@@ -63,10 +70,20 @@ class StudentController extends Controller
 							<a href="javascript:void(0)" data-did="'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
                             return $btn;
                     })
-                    ->rawColumns(['action'])
+					->addColumn('pic', function($row){
+							$path = public_path() . '/image/'.$row->pic;
+                            return "<img src='".$path."'>";
+							//return $row->pic;
+                            
+                    }) 
+					/*->addColumn('pic', function ($image) { 
+						   $url=asset("student_image/$image->image"); 
+						   return '<img src='.$url.' border="0" width="40" class="img-rounded" align="center" />'; 
+					}) */
+                    ->rawColumns(['action','pic'])
                     ->make(true);
         }
           
-        return view('users');
+        return view('student-form');
 	}
 }

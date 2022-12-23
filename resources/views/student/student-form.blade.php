@@ -26,7 +26,7 @@
 				@endif
 			</div>
 			<div class="modal-body">
-			  <form method='post' action="{{Route('student-save')}}">
+			  <form method='post' action="{{Route('student-save')}}" enctype="multipart/form-data">
 			  @csrf
 				<div class="col-xl-12">
 					<div class='form-group'>
@@ -69,6 +69,12 @@
 						</select>
 					</div>
 				</div>
+				<div class="col-xl-12">
+					<div class="form-group">
+						<label>Image : </label>
+						<input type="file" name="pic" class="form-control">
+					</div>
+				</div>
 				<input type='submit' class='btn btn-info btn-block'>
 			  </form>
 			</div>
@@ -89,6 +95,7 @@
 				<th>Name</th>
 				<th>Email</th>
 				<th>Mobile</th>
+				<th>Pic</th>
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -109,6 +116,12 @@
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
 			{data: 'mobile', name: 'mobile'},
+			{data: 'pic', name: 'pic'},
+			/*{data: 'pic', name: 'pic',
+				render: function( data, type, full, meta ) {
+                        return "<img src=\"{{asset('public/image')}}/" + data + "\" height=\"50\"/>";
+                    }
+			},*/
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
