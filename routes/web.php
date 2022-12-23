@@ -16,3 +16,13 @@ use App\Http\Controllers\StudentController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::group(['middleware' => 'auth'], function () {
+	Route::get('create-student',[StudentController::class,'create'])->name('create-student');
+	Route::post('create-student',[StudentController::class,'studentSave'])->name('student-save');
+});
+require __DIR__.'/auth.php';
