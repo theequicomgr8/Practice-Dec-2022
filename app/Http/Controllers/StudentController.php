@@ -66,8 +66,8 @@ class StudentController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
        
-                            $btn = '<a href="javascript:void(0)" data-eid="'.$row->id.'" class="edit btn btn-primary btn-sm">Edit</a>
-							<a href="javascript:void(0)" data-did="'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+                            $btn = '<a href="javascript:void(0)" data-eid="'.$row->id.'" class="edit btn btn-primary btn-sm"><i class="fa fa-edit" style="font-size:16px"></i></a>
+							<a href="javascript:void(0)" data-did="'.$row->id.'" class="edit btn btn-danger btn-sm"><i class="fa fa-trash-o" style="font-size:16px"></i></a>';
                             return $btn;
                     })
 					->addColumn('pic', function($row){
