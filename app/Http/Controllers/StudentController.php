@@ -71,7 +71,8 @@ class StudentController extends Controller
                             return $btn;
                     })
 					->addColumn('pic', function($row){
-							$path = public_path() . '/image/'.$row->pic;
+							//$path = public_path() . '/image/'.$row->pic;
+							$path = "/../image/".$row->pic;
                             //return "<img src='".$path."'>";
 							//return $row->pic;
 							return $path;
