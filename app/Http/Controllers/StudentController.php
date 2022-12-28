@@ -61,7 +61,12 @@ class StudentController extends Controller
 	public function studentDisplay(Request $request){
 		if ($request->ajax()) {
 			$i=1;
-            $data = DB::table('students')->get();
+            $data = DB::table('students');
+			
+			
+			
+			$data=$data->get();
+			
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -70,22 +75,93 @@ class StudentController extends Controller
 							<a href="javascript:void(0)" data-did="'.$row->id.'" class="edit btn btn-danger btn-sm"><i class="fa fa-trash-o" style="font-size:16px"></i></a>';
                             return $btn;
                     })
+					
+					
 					->addColumn('pic', function($row){
-							//$path = public_path() . '/image/'.$row->pic;
 							$path = "/../image/".$row->pic;
-                            //return "<img src='".$path."'>";
-							//return $row->pic;
-							return $path;
+                            return "<img src='".$path."'>";
+							//return $path;
                             
                     }) 
-					/*->addColumn('pic', function ($image) { 
-						   $url=asset("student_image/$image->image"); 
-						   return '<img src='.$url.' border="0" width="40" class="img-rounded" align="center" />'; 
-					}) */
                     ->rawColumns(['action','pic'])
                     ->make(true);
         }
           
         return view('student-form');
+	}
+	
+	
+	
+	
+	
+	public function studentList(){
+		return view('student.student-list');
+	}
+	
+	public function allstudent(Request $request){
+		$columns = array( 
+                            0 =>'id', 
+                            1 =>'name',
+                            2=> 'email',
+                            3=> 'mobile',
+                        );
+  
+        $totalData = Student::count();
+            
+        $totalFiltered = $totalData; 
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+            
+        if(empty($request->input('search.value')))
+        {            
+            $posts = Student::offset($start)
+                         ->limit($limit)
+                         ->orderBy($order,$dir)
+                         ->get();
+        }
+        else {
+            $search = $request->input('search.value'); 
+
+            $posts =  Student::where('id','LIKE',"%{$search}%")
+                            ->orWhere('name', 'LIKE',"%{$search}%")
+                            ->offset($start)
+                            ->limit($limit)
+                            ->orderBy($order,$dir)
+                            ->get();
+
+            $totalFiltered = Student::where('id','LIKE',"%{$search}%")
+                             ->orWhere('name', 'LIKE',"%{$search}%")
+                             ->count();
+        }
+
+        $data = array();
+        if(!empty($posts))
+        {
+            foreach ($posts as $post)
+            {
+                // $show =  route('posts.show',$post->id);
+                // $edit =  route('posts.edit',$post->id);
+                $nestedData['id'] = $post->id;
+                $nestedData['name'] = $post->name;
+                $nestedData['email'] = $post->email;
+                $nestedData['mobile'] = $post->mobile;
+                $nestedData['options'] = "&emsp;<a href='edit/{$post->id}' title='SHOW' >Edit</a>
+                                          &emsp;<a href='delete/{$post->id}' title='EDIT' >Delete</a>";
+                $data[] = $nestedData;
+
+            }
+        }
+          
+        $json_data = array(
+	        "draw"            => intval($request->input('draw')),  
+	        "recordsTotal"    => intval($totalData),  
+	        "recordsFiltered" => intval($totalFiltered), 
+	        "data"            => $data   
+        );
+            
+        echo json_encode($json_data); 
 	}
 }

@@ -25,5 +25,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('create-student',[StudentController::class,'create'])->name('create-student');
 	Route::post('create-student',[StudentController::class,'studentSave'])->name('student-save');
 	Route::get('student-display',[StudentController::class,'studentDisplay'])->name('student.index');
+	Route::get('student',[StudentController::class,'studentList'])->name('student');
+	
+	Route::post('allstudent', [StudentController::class,'allstudent'] )->name('allstudent');
 });
 require __DIR__.'/auth.php';

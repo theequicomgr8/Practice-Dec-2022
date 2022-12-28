@@ -87,7 +87,12 @@
 	  </div>
 	  
 	  
+	  
+	  
 	  <!--  datatable  -->
+	  <div class="card-body">
+		<input type="text" name="email" class="form-control searchEmail" placeholder="Search for Email Only...">
+		<br>
 	  <table class="table table-bordered data-table">
 		<thead>
 			<tr>
@@ -101,12 +106,13 @@
 		</thead>
 		<tbody></tbody>
 	  </table> 
+	  </div>
 	  
 	</div>
 
 <script type="text/javascript">
   $(function () {
-      
+    //alert('dfd');
     var table = $('.data-table').DataTable({
         processing: true,
         serverSide: true,
@@ -116,15 +122,17 @@
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
 			{data: 'mobile', name: 'mobile'},
-			//{data: 'pic', name: 'pic'},
-			{data: 'pic', name: 'pic',
+			{data: 'pic', name: 'pic'},
+			/*{data: 'pic', name: 'pic',
 				render: function( data, type, full, meta ) {
                         return "<img src=\"" + data + "\" height=\"50\"/>";
                     }
-			},
+			},*/
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
+	
+	
       
   });
 </script>
